@@ -167,10 +167,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void deleteNote(Note note) {
         // TODO 删除数据
+
         String selection = TodoContract.TodoEntry._ID + " LIKE ? ";
         String[]selectionArgs={String.valueOf(note.id)};
         Log.d("Text",String.valueOf(note.id));
         int deletedRows = db.delete(TodoContract.TodoEntry.TABLE_NAME,selection,selectionArgs);
+        notesAdapter.refresh(loadNotesFromDatabase());
     }
 
     private void updateNode(Note note) {
@@ -185,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         }else
             values.put(TodoContract.TodoEntry.STATE,0);
         db.update(TodoContract.TodoEntry.TABLE_NAME,values,selection,selectionArgs);
+        notesAdapter.refresh(loadNotesFromDatabase());
     }
 
 }
